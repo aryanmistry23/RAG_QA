@@ -69,3 +69,9 @@ if st.button("Ask", type="primary") and question.strip():
 
     st.subheader("Answer:")
     st.write(result["result"])
+    
+    with st.expander("Retrieved context"):
+        for i, doc in enumerate(result["source_documents"], 1):
+            st.markdown(f"**Chunk {i}**")
+            st.write(doc.page_content)
+            st.divider()
