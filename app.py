@@ -72,7 +72,8 @@ if st.button("Ask", type="primary") and question.strip():
         result = get_qa_chain().invoke({"query": question})
 
     st.subheader("Answer")
-    st.write(result["result"])
+    response = qa_chain.invoke({"query":user_question})
+    st.write(reponse["result"])
 
     with st.expander("Retrieved context"):
         for i, doc in enumerate(result["source_documents"], 1):
