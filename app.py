@@ -57,7 +57,7 @@ def get_qa_chain():
         return_source_documents=True,
     )
     
-st.set_page_config(page_title="Industrial Q&A Chatbot", page_icon="🔎")
+st.set_page_config(page_title="Industrial Q&A Chatbot")
 st.title("Industrial Q&A Chatbot")
 st.caption("Ask a question.")
 
