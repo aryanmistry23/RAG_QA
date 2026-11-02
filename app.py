@@ -61,11 +61,11 @@ def get_qa_chain():
 
 
 # ---------- UI ----------
-st.set_page_config(page_title="Dolly RAG Q&A", page_icon="🔎")
-st.title("🔎 Dolly RAG Q&A")
-st.caption("Ask a question. Answers are retrieved from the Dolly-15k dataset.")
+st.set_page_config(page_title="Industrial Q&A Chatbot", page_icon="🔎")
+st.title("Industrial Q&A Chatbot")
+st.caption("Ask a question.")
 
-question = st.text_input("Your question", placeholder="Who is Arthur?")
+question = st.text_input("Your question", placeholder="Hope you are doing well! How can I help you today?")
 
 if st.button("Ask", type="primary") and question.strip():
     with st.spinner("Searching and generating an answer..."):
