@@ -65,7 +65,7 @@ question = st.text_input("Your question", placeholder="Hope you are doing well! 
 
 if st.button("Ask", type="primary") and question.strip():
     with st.spinner("Searching and generating an answer..."):
-        result = get_qa_chain().invoke({"query": question})
+        result = get_qa_chain().invoke({"query"})
 
     st.subheader("Answer:")
     st.write(result["result"])
