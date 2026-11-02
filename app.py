@@ -68,11 +68,10 @@ if st.button("Ask", type="primary") and question.strip():
         result = get_qa_chain().invoke({"query": question})
 
     st.subheader("Answer")
-    response = qa_chain.invoke({"query": user_question})
-    st.write(reponse["result"])
+    st.write(result["result"])
 
     with st.expander("Retrieved context"):
-        for i, doc in enumerate(result["source_documents"], 1):
+        for i, doc in enumerate(result["source_documents"][:1], 1):
             st.markdown(f"**Chunk {i}**")
             st.write(doc.page_content)
             st.divider()
