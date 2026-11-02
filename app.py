@@ -68,4 +68,4 @@ if st.button("Ask", type="primary") and question.strip():
         result = get_qa_chain().invoke({"query": question})
 
     st.subheader("Answer:")
-    st.write(result["result"][:-1])
+    st.write(result["result"])
