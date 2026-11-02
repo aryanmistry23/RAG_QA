@@ -12,7 +12,6 @@ EMB_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 LLM_MODEL = "google/flan-t5-base"
 INDEX_DIR = "faiss_index"
 
-
 @st.cache_resource(show_spinner="Loading embedding model...")
 def get_embeddings():
     return HuggingFaceEmbeddings(
@@ -21,7 +20,6 @@ def get_embeddings():
         encode_kwargs={"normalize_embeddings": False},
     )
 
-
 @st.cache_resource(show_spinner="Loading or building the vector index...")
 def get_vectorstore():
     embeddings = get_embeddings()
@@ -29,7 +27,7 @@ def get_vectorstore():
         return FAISS.load_local(
             INDEX_DIR, embeddings, allow_dangerous_deserialization=True
         )
-
+        
     data = HuggingFaceDatasetLoader(DATASET, "context").load()
     docs = RecursiveCharacterTextSplitter(
         chunk_size=1000, chunk_overlap=0
@@ -37,7 +35,6 @@ def get_vectorstore():
     db = FAISS.from_documents(docs, embeddings)
     db.save_local(INDEX_DIR)
     return db
-
 
 @st.cache_resource(show_spinner="Loading language model...")
 def get_qa_chain():
@@ -49,6 +46,7 @@ def get_qa_chain():
         tokenizer=tokenizer,
         max_new_tokens=512,
     )
+    
     llm = HuggingFacePipeline(pipeline=pipe)
 
     retriever = get_vectorstore().as_retriever(search_kwargs={"k": 3})
@@ -58,9 +56,7 @@ def get_qa_chain():
         retriever=retriever,
         return_source_documents=True,
     )
-
-
-# ---------- UI ----------
+    
 st.set_page_config(page_title="Industrial Q&A Chatbot", page_icon="🔎")
 st.title("Industrial Q&A Chatbot")
 st.caption("Ask a question.")
