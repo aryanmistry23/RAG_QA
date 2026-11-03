@@ -6,7 +6,7 @@ from langchain_huggingface import HuggingFaceEmbeddings, HuggingFacePipeline
 from langchain_community.vectorstores import FAISS
 from langchain_classic.chains import RetrievalQA
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
-from langchain_ibm import ChatWatsonx
+from langchain_community_ibm import ChatWatsonx
 
 DATASET = "databricks/databricks-dolly-15k"
 EMB_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
