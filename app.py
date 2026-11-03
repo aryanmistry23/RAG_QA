@@ -70,8 +70,7 @@ def get_qa_chain():
         model=model,
         tokenizer=tokenizer,
         max_new_tokens=512,
-        return_full_text=True,
-        do_sample=True,
+        return_full_text=False,
     )
     
     llm = HuggingFacePipeline(pipeline=pipe)
@@ -93,7 +92,19 @@ question = st.text_input("Your question", placeholder="Hope you are doing well! 
 if st.button("Ask", type="primary") and question.strip():
     with st.spinner("Searching and generating an answer..."):
         result = get_qa_chain().invoke({"query": question})
-
+       
+        answer = result["result"].strip()
+        for junk in [
+            "Use the following pieces of context",
+            "Answer only using the information",
+            "If you don't know the answer",
+            "Context:",
+            "Question:",
+            "Helpful Answer:",
+            "Answer:"
+        ]:
+            if junk in answer:
+                answer = answer.split(junk)[-1].strip()
     st.subheader("Answer:")
     st.write(result["result"])
     
