@@ -46,6 +46,7 @@ def get_qa_chain():
         tokenizer=tokenizer,
         max_new_tokens=512,
         return_full_text=False,
+        do_sample=True,
     )
     
     llm = HuggingFacePipeline(pipeline=pipe)
@@ -55,7 +56,7 @@ def get_qa_chain():
         llm=llm,
         chain_type="stuff",
         retriever=retriever,
-        return_source_documents=True,
+        return_source_documents=False,
     )
     
 st.set_page_config(page_title="Industrial Q&A Chatbot")
