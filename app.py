@@ -45,6 +45,7 @@ def get_qa_chain():
         model=model,
         tokenizer=tokenizer,
         max_new_tokens=512,
+        return_full_text=False,
     )
     
     llm = HuggingFacePipeline(pipeline=pipe)
