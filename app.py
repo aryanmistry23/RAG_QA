@@ -22,11 +22,36 @@ def get_embeddings():
 
 @st.cache_resource(show_spinner="Loading or building the vector index...")
 def get_vectorstore():
-    embeddings = get_embeddings()
-    if os.path.exists(INDEX_DIR):
-        return FAISS.load_local(
-            INDEX_DIR, embeddings, allow_dangerous_deserialization=True
-        )
+    documents_folder = "documents"
+
+    if not os.path.exists(documents_folder):
+        os.makedirs(documents_folder)
+        raise FileNotFoundError(f"Please put your PDF/TXT files inside the '{documents_folder}' folder.")
+
+    loader = DirectoryLoader(
+        documents_folder,
+        glob="**/*.pdf",
+        show_progress=True,
+        use_multithreading=True,
+    )
+
+    documents = loader.load()
+
+    if not documents:
+        raise ValueError("No PDF documents found in the 'documents' folder.")
+
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=800,
+        chunk_overlap=100
+    )
+    chunks = text_splitter.split_documents(documents)
+
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+
+    vectorstore = FAISS.from_documents(chunks, embeddings)
+    return vectorstore
         
     data = HuggingFaceDatasetLoader(DATASET, "context").load()
     docs = RecursiveCharacterTextSplitter(
