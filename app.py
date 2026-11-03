@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 from langchain_community.document_loaders import HuggingFaceDatasetLoader
+from langchain_classic.indexes import VectorstoreIndexCreator
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings, HuggingFacePipeline
 from langchain_community.vectorstores import FAISS
